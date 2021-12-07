@@ -61,6 +61,17 @@ class BIntegerType50 extends BIntegerType {
           bytes[i] = buffer.get();
         }
         value = new BInteger(new BigInteger(bytes));
+        if (value.tooBig()) {
+          System.out.println("-- parsed <integer> that is too big. Bytes: ");
+          for(int i = start; i >= 0 && i < intSize; i += delta) {
+            System.out.println(String.format("0x%02X char(", bytes[i]) + (char)bytes[i] + " )");
+          }
+          System.out.println("-- Moar: ");
+          for(int i = 0; i < 100; i += 1) {
+            int b = buffer.get();
+            System.out.println(String.format("0x%02X char(", b) + (char)b + " )");
+          }
+        }
       }
         
     }

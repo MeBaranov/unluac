@@ -33,17 +33,31 @@ class LStringType50 extends LStringType {
   
   @Override
   public LString parse(final ByteBuffer buffer, BHeader header) {
+    buffer.mark();
     BInteger sizeT = header.sizeT.parse(buffer, header);
     final StringBuilder b = this.b.get();
     b.setLength(0);
-    sizeT.iterate(new Runnable() {
-      
-      @Override
-      public void run() {
-        b.append((char) (0xFF & buffer.get()));
+    if (sizeT.tooBig() && false) {
+      buffer.reset();
+      int v = 0;
+      while (v == 0) {
+        v = 0xFF & buffer.get();
       }
-      
-    });
+      b.append((char) v);
+      while (v != 0) {
+        v = 0xFF & buffer.get();
+        b.append((char) v);
+      }
+    } else {
+      sizeT.iterate(new Runnable() {
+        
+        @Override
+        public void run() {
+          b.append((char) (0xFF & buffer.get()));
+        }
+        
+      });
+    }
     if(b.length() == 0) {
       return LString.NULL;
     } else {

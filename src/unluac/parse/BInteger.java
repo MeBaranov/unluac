@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class BInteger extends BObject {
   
-  private final BigInteger big;
+  public final BigInteger big;
   private final int n;
   
   private static BigInteger MAX_INT = null;
@@ -34,10 +34,15 @@ public class BInteger extends BObject {
     if(big == null) {
       return n;
     } else if(big.compareTo(MAX_INT) > 0 || big.compareTo(MIN_INT) < 0) {
-      throw new IllegalStateException("The size of an integer is outside the range that unluac can handle.");
+      System.out.println("-- Even more than: ");
+      return Integer.MAX_VALUE;
     } else {
       return big.intValue();
     }
+  }
+
+  public boolean tooBig() {
+    return (big != null) && (big.compareTo(MAX_INT) > 0 || big.compareTo(MIN_INT) < 0);
   }
   
   public byte[] littleEndianBytes(int size) {

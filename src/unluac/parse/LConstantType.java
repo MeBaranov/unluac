@@ -35,6 +35,9 @@ class LConstantType50 extends LConstantType {
           System.out.println("<boolean>");
           break;
         case 3:
+          System.out.println("<float>");
+        break;
+        case 254:
           System.out.println("<number>");
           break;
         case 4:
@@ -51,6 +54,8 @@ class LConstantType50 extends LConstantType {
       case 1:
         return header.bool.parse(buffer, header);
       case 3:
+        return header.lfloat.parse(buffer, header);
+      case 254:
         return header.number.parse(buffer, header);
       case 4:
         return header.string.parse(buffer, header);

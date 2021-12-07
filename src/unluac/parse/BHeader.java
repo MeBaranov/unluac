@@ -89,6 +89,10 @@ public class BHeader {
     if(version == null) {
       throw new IllegalStateException("The input chunk's Lua version is " + major + "." + minor + "; unluac can only handle Lua 5.0 - Lua 5.4.");
     }
+
+    if (debug) {
+      System.out.println("-- version (major, minor): (" + major + ", " + minor + ")");
+    }
     
     lheader_type = version.getLHeaderType();
     lheader = lheader_type.parse(buffer, this);

@@ -189,10 +189,10 @@ abstract public class LHeaderType extends BObjectType<LHeader> {
     if(header.debug) {
       System.out.println("-- Lua number integrality code: " + lNumberIntegralityCode);
     }
-    if(lNumberIntegralityCode > 1) {
+    if(lNumberIntegralityCode > 1 && lNumberIntegralityCode != 8) {
       throw new IllegalStateException("The input chunk reports an invalid code for lua number integrality: " + lNumberIntegralityCode);
     }
-    s.lNumberIntegrality = (lNumberIntegralityCode == 1);
+    s.lNumberIntegrality = (lNumberIntegralityCode == 8);
   }
   
   protected void write_number_integrality(OutputStream out, BHeader header, LHeader object) throws IOException {
@@ -342,6 +342,7 @@ class LHeaderType51 extends LHeaderType {
     parse_instruction_size(buffer, header, s);
     parse_number_size(buffer, header, s);
     parse_number_integrality(buffer, header, s);
+    s.lfloat = new LNumberType(s.lNumberSize, false, LNumberType.NumberMode.MODE_FLOAT);
     s.number = new LNumberType(s.lNumberSize, s.lNumberIntegrality, LNumberType.NumberMode.MODE_NUMBER);
   }
   
